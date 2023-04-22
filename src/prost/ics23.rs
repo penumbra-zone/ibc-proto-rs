@@ -19,6 +19,7 @@
 /// in the ProofSpec is valuable to prevent this mutability. And why all trees should
 /// length-prefix the data before hashing it.
 #[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(::serde::Serialize, ::serde::Deserialize)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExistenceProof {
     #[prost(bytes = "vec", tag = "1")]
@@ -35,6 +36,7 @@ pub struct ExistenceProof {
 /// one right of the desired key. If both proofs are valid AND they are neighbors,
 /// then there is no valid proof for the given key.
 #[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(::serde::Serialize, ::serde::Deserialize)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NonExistenceProof {
     /// TODO: remove this as unnecessary??? we prove a range
@@ -48,6 +50,7 @@ pub struct NonExistenceProof {
 ///
 /// CommitmentProof is either an ExistenceProof or a NonExistenceProof, or a Batch of such messages
 #[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(::serde::Serialize, ::serde::Deserialize)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CommitmentProof {
     #[prost(oneof = "commitment_proof::Proof", tags = "1, 2, 3, 4")]
@@ -253,6 +256,7 @@ pub struct CompressedExistenceProof {
     pub path: ::prost::alloc::vec::Vec<i32>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(::serde::Serialize, ::serde::Deserialize)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CompressedNonExistenceProof {
     /// TODO: remove this as unnecessary??? we prove a range
