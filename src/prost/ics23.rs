@@ -89,11 +89,13 @@ pub mod commitment_proof {
 /// output = hash(prefix || length(hkey) || hkey || length(hvalue) || hvalue)
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Eq)]
 #[derive(::serde::Serialize, ::serde::Deserialize)]
 pub struct LeafOp {
     #[prost(enumeration = "HashOp", tag = "1")]
     pub hash: i32,
     #[prost(enumeration = "HashOp", tag = "2")]
+    #[serde(default)]
     pub prehash_key: i32,
     #[prost(enumeration = "HashOp", tag = "3")]
     pub prehash_value: i32,
@@ -122,6 +124,7 @@ pub struct LeafOp {
 /// If either of prefix or suffix is empty, we just treat it as an empty string
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Eq)]
 #[derive(::serde::Serialize, ::serde::Deserialize)]
 pub struct InnerOp {
     #[prost(enumeration = "HashOp", tag = "1")]
@@ -144,6 +147,7 @@ pub struct InnerOp {
 /// tree format server uses. But not in code, rather a configuration object.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Eq)]
 #[derive(::serde::Serialize, ::serde::Deserialize)]
 pub struct ProofSpec {
     /// any field in the ExistenceProof must be the same as in this spec.
@@ -154,9 +158,11 @@ pub struct ProofSpec {
     pub inner_spec: ::core::option::Option<InnerSpec>,
     /// max_depth (if > 0) is the maximum number of InnerOps allowed (mainly for fixed-depth tries)
     #[prost(int32, tag = "3")]
+    #[serde(default)]
     pub max_depth: i32,
     /// min_depth (if > 0) is the minimum number of InnerOps allowed (mainly for fixed-depth tries)
     #[prost(int32, tag = "4")]
+    #[serde(default)]
     pub min_depth: i32,
     /// prehash_key_before_comparison is a flag that indicates whether to use the
     /// prehash_key specified by LeafOp to compare lexical ordering of keys for
@@ -176,6 +182,7 @@ pub struct ProofSpec {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(::serde::Serialize, ::serde::Deserialize)]
+#[derive(Eq)]
 pub struct InnerSpec {
     /// Child order is the ordering of the children node, must count from 0
     /// iavl tree is [0, 1] (left then right)
