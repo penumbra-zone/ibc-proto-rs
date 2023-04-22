@@ -59,6 +59,7 @@ pub struct CommitmentProof {
 /// Nested message and enum types in `CommitmentProof`.
 pub mod commitment_proof {
     #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(::serde::Serialize, ::serde::Deserialize)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Proof {
         #[prost(message, tag = "1")]
@@ -88,6 +89,7 @@ pub mod commitment_proof {
 /// output = hash(prefix || length(hkey) || hkey || length(hvalue) || hvalue)
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(::serde::Serialize, ::serde::Deserialize)]
 pub struct LeafOp {
     #[prost(enumeration = "HashOp", tag = "1")]
     pub hash: i32,
@@ -120,6 +122,7 @@ pub struct LeafOp {
 /// If either of prefix or suffix is empty, we just treat it as an empty string
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(::serde::Serialize, ::serde::Deserialize)]
 pub struct InnerOp {
     #[prost(enumeration = "HashOp", tag = "1")]
     pub hash: i32,
@@ -141,6 +144,7 @@ pub struct InnerOp {
 /// tree format server uses. But not in code, rather a configuration object.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(::serde::Serialize, ::serde::Deserialize)]
 pub struct ProofSpec {
     /// any field in the ExistenceProof must be the same as in this spec.
     /// except Prefix, which is just the first bytes of prefix (spec can be longer)
@@ -171,6 +175,7 @@ pub struct ProofSpec {
 /// isLeftNeighbor(spec: InnerSpec, left: InnerOp, right: InnerOp)
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(::serde::Serialize, ::serde::Deserialize)]
 pub struct InnerSpec {
     /// Child order is the ordering of the children node, must count from 0
     /// iavl tree is [0, 1] (left then right)
@@ -194,6 +199,7 @@ pub struct InnerSpec {
 /// BatchProof is a group of multiple proof types than can be compressed
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(::serde::Serialize, ::serde::Deserialize)]
 pub struct BatchProof {
     #[prost(message, repeated, tag = "1")]
     pub entries: ::prost::alloc::vec::Vec<BatchEntry>,
@@ -201,6 +207,7 @@ pub struct BatchProof {
 /// Use BatchEntry not CommitmentProof, to avoid recursion
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(::serde::Serialize, ::serde::Deserialize)]
 pub struct BatchEntry {
     #[prost(oneof = "batch_entry::Proof", tags = "1, 2")]
     pub proof: ::core::option::Option<batch_entry::Proof>,
@@ -209,6 +216,7 @@ pub struct BatchEntry {
 pub mod batch_entry {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
+#[derive(::serde::Serialize, ::serde::Deserialize)]
     pub enum Proof {
         #[prost(message, tag = "1")]
         Exist(super::ExistenceProof),
@@ -218,6 +226,7 @@ pub mod batch_entry {
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(::serde::Serialize, ::serde::Deserialize)]
 pub struct CompressedBatchProof {
     #[prost(message, repeated, tag = "1")]
     pub entries: ::prost::alloc::vec::Vec<CompressedBatchEntry>,
@@ -227,6 +236,7 @@ pub struct CompressedBatchProof {
 /// Use BatchEntry not CommitmentProof, to avoid recursion
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(::serde::Serialize, ::serde::Deserialize)]
 pub struct CompressedBatchEntry {
     #[prost(oneof = "compressed_batch_entry::Proof", tags = "1, 2")]
     pub proof: ::core::option::Option<compressed_batch_entry::Proof>,
@@ -235,6 +245,7 @@ pub struct CompressedBatchEntry {
 pub mod compressed_batch_entry {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
+#[derive(::serde::Serialize, ::serde::Deserialize)]
     pub enum Proof {
         #[prost(message, tag = "1")]
         Exist(super::CompressedExistenceProof),
@@ -243,6 +254,7 @@ pub mod compressed_batch_entry {
     }
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(::serde::Serialize, ::serde::Deserialize)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CompressedExistenceProof {
     #[prost(bytes = "vec", tag = "1")]
