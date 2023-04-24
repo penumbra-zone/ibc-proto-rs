@@ -51,7 +51,7 @@ pub struct NonExistenceProof {
 /// CommitmentProof is either an ExistenceProof or a NonExistenceProof, or a Batch of such messages
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(::serde::Serialize, ::serde::Deserialize)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message, Eq)]
 pub struct CommitmentProof {
     #[prost(oneof = "commitment_proof::Proof", tags = "1, 2, 3, 4")]
     pub proof: ::core::option::Option<commitment_proof::Proof>,
